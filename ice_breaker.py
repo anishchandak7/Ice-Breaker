@@ -4,14 +4,15 @@ interesting facts, and uses OpenAI's GPT-3.5-turbo model to create content based
 information.
 """
 import os
+from typing import Tuple
 from dotenv import load_dotenv
 from langchain.prompts.prompt import PromptTemplate
 from langchain_openai import ChatOpenAI
 from third_parties.linkedin import scrape_linkedin_profile
 from agents.linkedin_lookup_agent import lookup
-from output_parser import summary_parser
+from output_parser import summary_parser, Summary
 
-def ice_break_with(name:str):   
+def ice_break_with(name:str)-> Tuple[Summary, str]:   
     """
     This Python function loads environment variables, prompts for information, and
     generates a short summary and two interesting facts using the OpenAI GPT-3.5 Turbo model.
@@ -42,10 +43,7 @@ def ice_break_with(name:str):
         linkedin_profile_url=linkedin_profile_url,
         mock=True)
     # 8. Invoke the chain.
-    result = chain.invoke(input={'information': linkedin_data})
-    # 9. Display the results.
-    print(result.summary)
+    result:Summary = chain.invoke(input={'information': linkedin_data})
+    return result, linkedin_data.get("profile_pic_url")
 
-if __name__ == "__main__":
-    ice_break_with('Anish Chandak Deloitte')
     
