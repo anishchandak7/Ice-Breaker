@@ -9,6 +9,8 @@ camelcase = "*"
 langchain = "*"
 langchain-openai = "*"
 python-dotenv = "*"
+langchain-community = "*"
+langchainhub = "*"
 
 [dev-packages]
 
